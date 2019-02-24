@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\EntityCreateException;
 use Facades\App\Invoice;
 use App\Account;
 use App\Lease;
@@ -52,6 +53,7 @@ class InvoiceService
      * Creates an Invoice by an Account model.
      * @param Account $account
      * @return
+     * @throws EntityCreateException
      */
     public function createInvoiceByAccount(Account $account)
     {
@@ -72,7 +74,10 @@ class InvoiceService
 
         // set the status to due
 
-        $invoice->save();
+        // save the entity
+        if (!$invoice->save()) {
+            throw new EntityCreateException();
+        }
 
         return $invoice;
     }
@@ -81,6 +86,7 @@ class InvoiceService
      * Creates an Invoice by a Unit model.
      * @param Unit $unit
      * @return
+     * @throws EntityCreateException
      */
     public function createInvoiceByUnit(Unit $unit)
     {
@@ -101,6 +107,11 @@ class InvoiceService
 
         // set the status to due
 
+        // save the entity
+        if (!$invoice->save()) {
+            throw new EntityCreateException();
+        }
+
         return $invoice;
     }
 
@@ -108,6 +119,7 @@ class InvoiceService
      * Creates an Invoice by a Lease model.
      * @param Lease $lease
      * @return
+     * @throws EntityCreateException
      */
     public function createInvoiceByLease(Lease $lease)
     {
@@ -127,6 +139,11 @@ class InvoiceService
         // set calculated field value e.g. number, sub total, total
 
         // set the status to due
+
+        // save the entity
+        if (!$invoice->save()) {
+            throw new EntityCreateException();
+        }
 
         return $invoice;
     }
