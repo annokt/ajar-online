@@ -16,16 +16,18 @@ class CreateInvoicesTable extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->increments('id');
             $table->morphs('entity');
-            $table->string('number');
-            $table->unsignedInteger('user_id');
             $table->integer('billing_address_id');
-            $table->integer('tax_registration_number');
+            $table->string('prefix', 8);
+            $table->integer('number');
             $table->string('currency', 3);
-            $table->integer('sub_total');
-            $table->integer('total');
             $table->timestamp('due_at');
-            $table->text('note');
-            $table->string('language', 2);
+            $table->integer('status')->default(0);
+            $table->text('note')->nullable();
+            $table->string('language', 2)->nullable();
+            $table->integer('sub_total')->nullable();
+            $table->integer('total')->nullable();
+            $table->integer('tax_registration_number')->nullable();
+            $table->unsignedInteger('user_id')->nullable();
             $table->timestamps();
         });
     }
