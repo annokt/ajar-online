@@ -226,4 +226,8 @@ return [
 
     ],
 
+    'invoice' => [
+        'defaultCurrency' => env('INVOICE_DEFAULT_CURRENCY'),
+        'defaultLanguage' => env('INVOICE_DEFAULT_LANGUAGE'),
+    ]
 ];
