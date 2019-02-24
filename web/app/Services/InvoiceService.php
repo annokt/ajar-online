@@ -8,6 +8,7 @@ use App\Account;
 use App\Lease;
 use App\Unit;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 use ReflectionClass;
 
@@ -57,6 +58,7 @@ class InvoiceService
      */
     public function createInvoiceByAccount(Account $account)
     {
+        /** @var \App\Invoice $invoice */
         $invoice = Invoice::newInstance();
         $invoice->entity()->associate($account);
         $invoice->billing_address_id = 1;
@@ -69,10 +71,14 @@ class InvoiceService
         $invoice->number = Invoice::where('prefix', $invoice->prefix)->max('number') + 1;
 
         // add line items
+        $invoice->addLineItem('Admin Fee', 1, 100, 5);
 
         // set calculated field value e.g. number, sub total, total
+        $invoice->sub_total = $invoice->lineItems()->sum(DB::raw('quantity * price'));
+        $invoice->total = $invoice->lineItems()->sum(DB::raw('quantity * price * tax / 100'));
 
         // set the status to due
+        $invoice->status = 1;
 
         // save the entity
         if (!$invoice->save()) {

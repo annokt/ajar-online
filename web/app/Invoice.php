@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $entity_id
  * @property string $entity_type
  * @property int $billing_address_id
+ * @property string $prefix
  * @property int $number
  * @property string $currency
  * @property int $due_at
@@ -76,10 +77,10 @@ class Invoice extends Model
      * @param $description
      * @param $quantity
      * @param $price
-     * @param $currency
+     * @param $tax
      */
-    public function addLineItem($description, $quantity, $price, $currency)
+    public function addLineItem($description, $quantity, $price, $tax = null)
     {
-        $this->lineItems()->create(compact('description', 'quantity', 'price', 'currency'));
+        $this->lineItems()->create(compact('description', 'quantity', 'price', 'tax'));
     }
 }

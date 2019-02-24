@@ -15,6 +15,7 @@ class CreateInvoiceLineItemsTable extends Migration
     {
         Schema::create('invoice_line_items', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('invoice_id');
             $table->string('description');
             $table->integer('quantity');
             $table->integer('price');

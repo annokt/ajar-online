@@ -20,6 +20,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class InvoiceLineItem extends Model
 {
+    public $guarded = [];
+
     /**
      * Defines invoice relation.
      */
